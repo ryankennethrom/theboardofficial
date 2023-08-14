@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: white;
+  width: 1000px;
+  height: 1000px;
+}
+
+canvas {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+div {
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 50px;
+  font-weight: bold;
+  font-family: sans-serif;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  gap: 10px;
+  margin: 10px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.cursorSizeContainer {
+  display:flex;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+}
+
+.cursorSize {
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.black-field {
+  background-color: black;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.eraser {
+  width: 50px;
+  height: 50px;
+}
+
+.selected {
+  border: "5px solid yellow";
+}
+
+.picker {
+  position: relative;
+}
+
+input[type=range]{
+  background-color: black;
+  writing-mode: bt-lr;
+  /* IE */
+  -webkit-appearance: slider-vertical;
+  /* Chromium */
+  width: 5px;
+  height: 175px;
+  padding: 0;
+}
+
+.swatch {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  border-radius: 9px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.childrenAndFrame {
+  display: flex;
+  flex-direction: row;
+}
+
+.canvasAndTools {
+  display: flex;
+  flex-direction: row;
+}
+
+iframe {
+  width: 250px;
+  height: 50px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  pointer-events: none;
+}
