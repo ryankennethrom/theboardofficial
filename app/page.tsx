@@ -4,7 +4,7 @@ import { useDraw } from "@/hooks/useDraw";
 import io from 'socket.io-client';
 import { PopoverPicker } from "../components/PopoverPicker";
 import { type } from "os";
-let socket = io("https://theboardserver.onrender.com");
+let socket = io("https://local:5000");
 
 interface pageProps {}
 
@@ -72,7 +72,8 @@ const Page: FC<pageProps> = ({}) => {
     ctx.closePath();
     ctx.stroke();
 
-    lineQueue.push({
+
+    socket.emit("pen-action", {
       startX: startPoint.x, 
       startY: startPoint.y, 
       currX: currX, currY:currY, 
@@ -81,17 +82,6 @@ const Page: FC<pageProps> = ({}) => {
       lineCap: 'round',
       strokeStyle: drawColor
     })
-
-    var canvas = canvasRef.current;
-    if(!canvas) return
-    if(timeout != undefined) 
-    {
-      clearTimeout(timeout);
-    }
-    timeout = setTimeout(function(){
-      socket.emit("pen-action", lineQueue);
-      lineQueue = [];
-    }, 1000)
   }
 
   const notifyServer = () => {

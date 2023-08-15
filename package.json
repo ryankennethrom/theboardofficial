@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "node index.js",
-    "build_orig": "next build",
     "start": "next start",
     "build": "next build"
   },
