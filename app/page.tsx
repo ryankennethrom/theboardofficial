@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { useDraw } from "@/hooks/useDraw";
 import io from 'socket.io-client';
 import { PopoverPicker } from "../components/PopoverPicker";
+import { globalAgent } from "http";
 let socket = io("https://theboardserver.onrender.com", {transports: ["websocket"]});
 
 interface pageProps {}
@@ -16,10 +17,11 @@ const Page: FC<pageProps> = ({}) => {
   const [eraserStyle, setEraserStyle] = useState();
   const [pickerStyle, setPickerStyle] = useState(); 
   const [lineWidth, setLineWidth] = useState(5);
+  const [lineQueue, setLineQueue] = useState([{}]);
   var isDrawing = false;
   var timeout: NodeJS.Timeout;
   var drawColor = pickerColor;
-  var lineQueue: { startX: number; startY: number; currX: number; currY: number; lineWidth: number; lineJoin: string; lineCap: string; strokeStyle: string; }[] = [];
+  //var lineQueue: { startX: number; startY: number; currX: number; currY: number; lineWidth: number; lineJoin: string; lineCap: string; strokeStyle: string; }[] = [];
   useEffect(()=>{
     socket.on("canvas-data", function(data){
       var interval = setInterval(function(){
@@ -37,10 +39,6 @@ const Page: FC<pageProps> = ({}) => {
           };
           image.src = data;
       });
-    window.onbeforeunload = (e) => {
-      socket.emit("pen-action", lineQueue);
-      e.returnValue = "";
-    }
     })
     socket.emit("canvas-data", null);
   }, []);
@@ -84,6 +82,7 @@ const Page: FC<pageProps> = ({}) => {
       lineCap: 'round',
       strokeStyle: drawColor
     })
+    setLineQueue(lineQueue);
   }
 
   const notifyServer = () => {
@@ -100,6 +99,8 @@ const Page: FC<pageProps> = ({}) => {
 
     // socket.emit("pen-action", lineQueue);
     // lineQueue = [];
+    socket.emit("pen-action", lineQueue);
+    setLineQueue([]);
   }
 
   return <div className="w-screen h-screen bg-white flex justify-center items-center">

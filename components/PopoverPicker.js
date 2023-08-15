@@ -12,13 +12,13 @@ export const PopoverPicker = ({ color, onChange, className }) => {
 
   return (
     <div className="picker">
-      <a href="#popover"><div
+      <div
         className={className}
         style={{background:color}}
         onClick={() => {
             toggle(true);
             }}
-      /></a>
+      />
 
       {isOpen && (
         <div id="popover" className="popover" ref={popover}>
