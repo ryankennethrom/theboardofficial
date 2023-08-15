@@ -38,7 +38,7 @@ const Page: FC<pageProps> = ({}) => {
           image.src = data;
       });
     window.onbeforeunload = (e) => {
-      socket.emit("pen action", lineQueue);
+      socket.emit("pen-action", lineQueue);
       e.returnValue = "";
     }
     })
