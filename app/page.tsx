@@ -18,6 +18,7 @@ const Page: FC<pageProps> = ({}) => {
   const [pickerStyle, setPickerStyle] = useState(); 
   const [lineWidth, setLineWidth] = useState(5);
   const [lineQueue, setLineQueue] = useState([{}]);
+  const [showCanvas, setShowCanvas] = useState(false);
   var isDrawing = false;
   var timeout: NodeJS.Timeout;
   var drawColor = pickerColor;
@@ -39,6 +40,7 @@ const Page: FC<pageProps> = ({}) => {
           };
           image.src = data;
       });
+      setShowCanvas(true);
     })
     socket.emit("canvas-data", null);
   }, []);
@@ -113,7 +115,7 @@ const Page: FC<pageProps> = ({}) => {
         </div>
       </div>
       <div className="canvasAndBoard">
-        <canvas
+        { showCanvas === true && <canvas
         onMouseDown={onMouseDown}
         onMouseUp={notifyServer}
         onTouchEnd={notifyServer}
@@ -122,7 +124,7 @@ const Page: FC<pageProps> = ({}) => {
         width = {750}
         height={750}
         className="border border-black rounded-m"
-        />
+        />}
       </div>
     </div>
   </div>
