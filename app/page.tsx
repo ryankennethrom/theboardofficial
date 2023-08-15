@@ -37,6 +37,10 @@ const Page: FC<pageProps> = ({}) => {
           };
           image.src = data;
       });
+    window.onbeforeunload = (e) => {
+      socket.emit("pen action", lineQueue);
+      e.returnValue = "";
+    }
     })
     socket.emit("canvas-data", null);
   }, []);
@@ -61,7 +65,17 @@ const Page: FC<pageProps> = ({}) => {
     const {x: currX, y:currY } = currentPoint
     let startPoint = prevPoint ?? currentPoint
 
-    socket.emit("pen-action", {
+    ctx.lineWidth = lineWidth;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = drawColor;
+    ctx.beginPath();
+    ctx.moveTo(startPoint.x, startPoint.y);
+    ctx.lineTo(currX, currY);
+    ctx.closePath();
+    ctx.stroke();
+
+    lineQueue.push({
       startX: startPoint.x, 
       startY: startPoint.y, 
       currX: currX, currY:currY, 
