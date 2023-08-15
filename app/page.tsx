@@ -4,7 +4,7 @@ import { useDraw } from "@/hooks/useDraw";
 import io from 'socket.io-client';
 import { PopoverPicker } from "../components/PopoverPicker";
 import { type } from "os";
-let socket = io("https://local:5000");
+let socket = io("https://theboardserver.onrender.com");
 
 interface pageProps {}
 
@@ -61,17 +61,6 @@ const Page: FC<pageProps> = ({}) => {
 
     const {x: currX, y:currY } = currentPoint
     let startPoint = prevPoint ?? currentPoint
-    ctx.lineWidth = lineWidth;
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = drawColor;
-
-    ctx.beginPath();
-    ctx.moveTo(startPoint.x, startPoint.y);
-    ctx.lineTo(currX, currY);
-    ctx.closePath();
-    ctx.stroke();
-
 
     socket.emit("pen-action", {
       startX: startPoint.x, 
