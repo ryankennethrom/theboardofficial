@@ -3,8 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { useDraw } from "@/hooks/useDraw";
 import io from 'socket.io-client';
 import { PopoverPicker } from "../components/PopoverPicker";
-import { type } from "os";
-let socket = io("https://theboardserver.onrender.com");
+let socket = io("https://theboardserver.onrender.com", {transports: ["websocket"]});
 
 interface pageProps {}
 
