@@ -105,29 +105,47 @@ const Page: FC<pageProps> = ({}) => {
     setLineQueue([]);
   }
 
-  return <div className="w-screen h-screen bg-white flex justify-center items-center">
-    <div className="canvasAndTools">
-      <div className="tools">
-        <PopoverPicker className="swatch" color={pickerColor} onChange={setPickerColor}/>
-        <input className="slider" min="2" value={lineWidth} max="50" type="range" onInput={(event: React.ChangeEvent<HTMLInputElement>) => setLineWidth(parseInt(event.target.value)) } />
-        <div className="cursorSizeContainer">
+  if (showCanvas == false){
+    return(
+      <div className="loadingServer">
+        <div>Fetching the server.</div>
+        <div> This may take a few seconds...</div>
+      </div>
+    )
+  }
+
+  return (
+  <div>
+    <h1>The Board</h1>
+    <iframe></iframe>
+    <div className="childrenAndFrame">
+      <iframe></iframe>
+      <div className="w-screen h-screen bg-white flex justify-center items-center">
+      <div className="canvasAndTools">
+        <div className="tools">
+          <PopoverPicker className="swatch" color={pickerColor} onChange={setPickerColor}/>
+          <input className="slider" min="2" value={lineWidth} max="50" type="range" onInput={(event: React.ChangeEvent<HTMLInputElement>) => setLineWidth(parseInt(event.target.value)) } />
+          <div className="cursorSizeContainer">
           <div className="cursorSize" style={{border: "1px solid black", borderRadius: 50, width: lineWidth, height: lineWidth}}></div>
         </div>
       </div>
       <div className="canvasAndBoard">
-        { showCanvas === true && <canvas
-        onMouseDown={onMouseDown}
-        onMouseUp={notifyServer}
-        onTouchEnd={notifyServer}
-        onTouchStart={onTouchStart}
-        ref={canvasRef}
-        width = {750}
-        height={750}
-        className="border border-black rounded-m"
-        />}
+          <canvas
+          onMouseDown={onMouseDown}
+          onMouseUp={notifyServer}
+          onTouchEnd={notifyServer}
+          onTouchStart={onTouchStart}
+          ref={canvasRef}
+          width = {750}
+          height={750}
+          className="border border-black rounded-m"
+          />
+      </div>
       </div>
     </div>
+    </div>
   </div>
+   )
 }
 
 export default Page;
